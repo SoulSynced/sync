@@ -1,12 +1,18 @@
 const ACTIVITIES = ["📺 Watching TV/Playing Games", "🛍️ Window Shopping at the Mall", "🧺 Picnic at the Park", "🔓 Escape Room", "🥾 Going on Hikes", "🍝 Going out to Eat"];
 const TRAITS = ["😂 Funny", "💖 Kind", "🎨 Creative", "🧘 Calm", "🗣️ Outgoing", "🧗 Adventurous", "🚀 Ambitious", "😇 Honest", "🤝 Loyal", "🧠 Academic"];
+const HOBBIES = [ "Art" , "Music", "Gym", "Sleeping" , "Cooking/Baking", "DoomScrolling", "People Watch"]
+const HUMOR = ["Silly Jokes", "Dark Humor", "Dad Jokes", "Chronically Online", "Satire"]
+const JOBS =  ["Engineer", "Doctor", "Lawyer", "Mcdonald's Worker", "Not Real Job L"
+const ZODIAC = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagitarrius", "Capricorn", "Aquarius", "Pisces", "idc"]
+const GENRE = [ "Horror/Pyscological Thriller", "Comedy", "Action", "Romance", "Drama", "Anime"]
+const LOVELANG = ["Words of Affiramtion", "Phsycial Touch", " Giving/Receiving Gifts", "Quality Time", "Acts of Service"] 
 const EMOJIS = ['💖', '✨', '💜', '💫', '🌸'];
 
 const starterPack = [
-    { name: "Luna 🌙", age: 24, gender: "Female", activities: ["🥾 Hiking", "🍝 Restaurant"], traits: ["🧗 Adventurous", "🧠 Smart", "😂 Funny"] },
-    { name: "Kai 🌊", age: 29, gender: "Male", activities: ["📺 Watching TV", "🔓 Escape Room"], traits: ["🧘 Calm", "😇 Honest", "🎨 Creative"] },
-    { name: "Skye ☁️", age: 26, gender: "Nonbinary", activities: ["🛍️ Mall", "🧺 Picnic"], traits: ["🗣️ Outgoing", "💖 Kind", "🤝 Loyal"] },
-    { name: "Charlie ✨", age: 27, gender: "Genderqueer", activities: ["🔓 Escape Room", "🧺 Picnic"], traits: ["🎨 Creative", "🧠 Smart", "🤝 Loyal"] }
+    { name: "Luna 🌙", age: 16, gender: "Female", activities: ["🥾 Hiking", "🍝 Restaurant"], traits: ["🧗 Adventurous", "🧠 Smart", "😂 Funny"] },
+    { name: "Kai 🌊", age: 19, gender: "Male", activities: ["📺 Watching TV", "🔓 Escape Room"], traits: ["🧘 Calm", "😇 Honest", "🎨 Creative"] },
+    { name: "Skye ☁️", age: 16, gender: "Nonbinary", activities: ["🛍️ Mall", "🧺 Picnic"], traits: ["🗣️ Outgoing", "💖 Kind", "🤝 Loyal"] },
+    { name: "Charlie ✨", age: 17, gender: "Genderqueer", activities: ["🔓 Escape Room", "🧺 Picnic"], traits: ["🎨 Creative", "🧠 Smart", "🤝 Loyal"] }
 ];
 
 let database = JSON.parse(localStorage.getItem('soulSyncedDB')) || starterPack;
