@@ -1,5 +1,5 @@
-const ACTIVITIES = ["📺 Watching TV", "🛍️ Mall", "🧺 Picnic", "🔓 Escape Room", "🥾 Hiking", "🍝 Restaurant"];
-const TRAITS = ["😂 Funny", "💖 Kind", "🎨 Creative", "🧘 Calm", "🗣️ Outgoing", "🧗 Adventurous", "🚀 Ambitious", "😇 Honest", "🤝 Loyal", "🧠 Smart"];
+const ACTIVITIES = ["📺 Watching TV/Playing Games", "🛍️ Window Shopping at the Mall", "🧺 Picnic at the Park", "🔓 Escape Room", "🥾 Going on Hikes", "🍝 Going out to Eat"];
+const TRAITS = ["😂 Funny", "💖 Kind", "🎨 Creative", "🧘 Calm", "🗣️ Outgoing", "🧗 Adventurous", "🚀 Ambitious", "😇 Honest", "🤝 Loyal", "🧠 Academic"];
 const EMOJIS = ['💖', '✨', '💜', '💫', '🌸'];
 
 const starterPack = [
