@@ -1,6 +1,6 @@
 const ACTIVITIES = ["📺 Watching TV/Playing Games", "🛍️ Window Shopping at the Mall", "🧺 Picnic at the Park", "🔓 Escape Room", "🥾 Going on Hikes", "🍝 Going out to Eat"];
 const TRAITS = ["😂 Funny", "💖 Kind", "🎨 Creative", "🧘 Calm", "🗣️ Outgoing", "🧗 Adventurous", "🚀 Ambitious", "😇 Honest", "🤝 Loyal", "🧠 Academic"];
-const HOBBIES = [ "Art" , "Music", "Gym", "Sleeping" , "Cooking/Baking", "DoomScrolling", "People Watch"]
+const HOBBIES = [ "Art" , "Music", "Gym", "Sleeping" , "Cooking/Baking", "DoomScrolling", "People Watching"]
 const HUMOR = ["Silly Jokes", "Dark Humor", "Dad Jokes", "Chronically Online", "Satire"]
 const JOBS =  ["Engineer", "Doctor", "Lawyer", "Mcdonald's Worker", "Not Real Job L"
 const ZODIAC = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagitarrius", "Capricorn", "Aquarius", "Pisces", "idc"]
