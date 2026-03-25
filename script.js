@@ -9,19 +9,19 @@ var EMOJIS = ["💖", "✨", "💜", "💫", "🌸", "☁️", "🩵"];
 
 var starterPack = [
     { 
-        name: "Luna", age: 16, gender: "Female", job: "Not Real Job", contact: "Insta: @luna_stays_home",
+        name: "Luna", age: 16, gender: "Female", job: "Not Real Job", contact: "not real person",
         activities: ["Going on Hikes", "Going out to Eat"], 
         traits: ["Adventurous", "Creative", "Funny"],
         hobbies: ["Art", "Music"], humor: "Dry/Satire", genre: "Anime", loveLang: "Quality Time"
     },
     { 
-        name: "Kai", age: 19, gender: "Male", job: "Engineer", contact: "Discord: kai_codez",
+        name: "Kai", age: 19, gender: "Male", job: "Engineer", contact: "not real person",
         activities: ["Watching TV/Playing Games", "Going out to Eat"], 
         traits: ["Self-Disciplined", "Trustworthy", "Curious"],
         hobbies: ["Gym", "Cooking/Baking"], humor: "Dark Humor", genre: "Horror/Psychological Thriller", loveLang: "Physical Touch"
     },
     { 
-        name: "Bob", age: 16, gender: "Other", job: "Dissapointment", contact: "Snap: bobthebuilder",
+        name: "Bob", age: 16, gender: "Other", job: "Dissapointment", contact: "not real person",
         activities: ["Window Shopping at the Mall", "Picnic at the Park"], 
         traits: ["Optimistic", "Warm-Hearted", "Empathetic"],
         hobbies: ["Music", "People Watching"], humor: "Silly Jokes", genre: "Romance", loveLang: "Quality Time"
