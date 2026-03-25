@@ -9,13 +9,13 @@ var EMOJIS = ["💖", "✨", "💜", "💫", "🌸", "☁️", "🩵"];
 
 var starterPack = [
     { 
-        name: "Luna", age: 16, gender: "Female", job: "Not Real Job", contact: "not real person",
+        name: "Sally", age: 16, gender: "Female", job: "Not Real Job", contact: "not real person",
         activities: ["Going on Hikes", "Going out to Eat"], 
         traits: ["Adventurous", "Creative", "Funny"],
         hobbies: ["Art", "Music"], humor: "Dry/Satire", genre: "Anime", loveLang: "Quality Time"
     },
     { 
-        name: "Kai", age: 19, gender: "Male", job: "Engineer", contact: "not real person",
+        name: "Fred", age: 19, gender: "Male", job: "Engineer", contact: "not real person",
         activities: ["Watching TV/Playing Games", "Going out to Eat"], 
         traits: ["Self-Disciplined", "Trustworthy", "Curious"],
         hobbies: ["Gym", "Cooking/Baking"], humor: "Dark Humor", genre: "Horror/Psychological Thriller", loveLang: "Physical Touch"
@@ -29,7 +29,7 @@ var starterPack = [
 ];
 
 var database = JSON.parse(localStorage.getItem("soulSyncedDB"));
-if (database == null) {
+if (database === null) {
     database = starterPack;
 }
 
@@ -47,7 +47,6 @@ function setupForm() {
     for (var i = 0; i < lists.length; i++) {
         var el = document.getElementById(lists[i]);
         var type = (i >= 4) ? "radio" : "checkbox";
-        
         var html = "";
         for (var j = 0; j < dataArrays[i].length; j++) {
             var val = dataArrays[i][j];
@@ -105,38 +104,30 @@ function runMatchmaking() {
         for (var i = 0; i < database.length; i++) {
             var person = database[i];
             var score = 0;
-
             if (person.age >= minAge && person.age <= maxAge) {
                 score += 20; 
             } else {
                 continue; 
             }
-
             if (prefGender === "Any" || prefGender === person.gender) { score += 30; }
-            
             for (var a = 0; a < userAct.length; a++) {
                 if (person.activities.indexOf(userAct[a]) !== -1) { score += 10; }
             }
             for (var t = 0; t < prefTraits.length; t++) {
                 if (person.traits.indexOf(prefTraits[t]) !== -1) { score += 15; }
             }
-            
             if (userHumor === person.humor) { score += 10; }
             if (userGenre === person.genre) { score += 10; }
-
             person.matchScore = Math.min(99, score);
             results.push(person);
         }
-
         results.sort(function(a, b) { return b.matchScore - a.matchScore; });
-
         var newUser = {
             name: userName + " 💫", age: userAge, gender: userGender, job: userJob, contact: userContact,
             activities: userAct, traits: userTrait, hobbies: userHobby, humor: userHumor, genre: userGenre, loveLang: userLove
         };
         database.push(newUser);
         localStorage.setItem("soulSyncedDB", JSON.stringify(database));
-
         btn.innerText = "Begin Sync";
         btn.disabled = false;
         displayResults(results, newUser);
@@ -148,7 +139,6 @@ function displayResults(results, currentUser) {
     document.getElementById("results").classList.remove("hidden");
     var display = document.getElementById("matchDisplay");
     display.innerHTML = "";
-
     var count = 0;
     for (var i = 0; i < results.length; i++) {
         var m = results[i];
@@ -169,26 +159,31 @@ function showModal(person, user) {
     var modal = document.getElementById("profileModal");
     var body = document.getElementById("modalBody");
     var common = [];
-    
-    for (var i = 0; i < person.activities.length; i++) {
-        if (user.activities.indexOf(person.activities[i]) !== -1) { common.push(person.activities[i]); }
+    if (person.activities && user.activities) {
+        for (var i = 0; i < person.activities.length; i++) {
+            if (user.activities.indexOf(person.activities[i]) !== -1) { common.push(person.activities[i]); }
+        }
     }
-    for (var j = 0; j < person.traits.length; j++) {
-        if (user.traits.indexOf(person.traits[j]) !== -1) { common.push(person.traits[j]); }
+    if (person.traits && user.traits) {
+        for (var j = 0; j < person.traits.length; j++) {
+            if (user.traits.indexOf(person.traits[j]) !== -1) { common.push(person.traits[j]); }
+        }
     }
-
     var commonHtml = "";
     for (var k = 0; k < common.length; k++) {
         commonHtml += "<span class='common-tag' style='margin:0;'>" + common[k] + "</span>";
     }
 
-    body.innerHTML = "<h2 style='font-family:Pacifico, cursive; color:var(--primary);'>" + person.name + "</h2>" +
-        "<p><strong>" + person.age + "</strong> — " + person.job + "</p>" +
-        "<div style='background:#f0edff; padding:20px; border-radius:15px; border:2px dashed var(--primary);'>" +
-        "<p style='font-size:0.7rem; color:var(--primary); text-transform:uppercase;'>Contact Info</p>" +
-        "<p style='font-weight:600; font-size:1.2rem;'>" + person.contact + "</p></div>" +
-        "<div style='text-align:left; margin-top:20px;'><p style='font-size:0.8rem; color:#666;'>Similarities:</p>" +
-        "<div style='display:flex; flex-wrap:wrap; gap:8px;'>" + (commonHtml || "Matching Soul") + "</div></div>";
+    body.innerHTML = "<h2 style='font-family:Pacifico, cursive; color:var(--primary); margin-bottom:10px;'>" + (person.name || "Unknown") + "</h2>" +
+        "<p style='margin-bottom:15px;'><strong>" + (person.age || "??") + "</strong> — " + (person.job || "N/A") + "</p>" +
+        "<div style='margin-bottom:20px;'>" +
+            "<p style='font-size:0.7rem; color:var(--primary); text-transform:uppercase; margin-bottom:2px;'>Contact Info</p>" +
+            "<p style='font-weight:600; font-size:1.1rem;'>" + (person.contact || "N/A") + "</p>" +
+        "</div>" +
+        "<div style='text-align:left;'>" + 
+            "<p style='font-size:0.8rem; color:#666; margin-bottom:5px;'>Similarities:</p>" +
+            "<div style='display:flex; flex-wrap:wrap; gap:8px;'>" + (commonHtml || "<span style='color:#999;'>N/A</span>") + "</div>" +
+        "</div>";
     
     modal.classList.remove("hidden");
 }
