@@ -38,7 +38,7 @@ function setupForm() {
     genderSelect.innerHTML = "<option value='' disabled selected>Your Identity</option><option value='Male'>Male</option><option value='Female'>Female</option><option value='Other'>Other</option>";
 
     var prefGenderSelect = document.getElementById("prefGender");
-    prefGenderSelect.innerHTML = "<option value='' disabled selected>Seeking...</option><option value='Male'>Male</option><option value='Female'>Female</option><option value='Other'>Other</option><option value='Any'>Open to All</option>";
+    prefGenderSelect.innerHTML = "<option value='' disabled selected>Gender Preference...</option><option value='Male'>Male</option><option value='Female'>Female</option><option value='Other'>Other</option><option value='Any'>Open to All</option>";
 
     var lists = ["activityList", "userTraitList", "prefTraitList", "hobbyList", "humorList", "genreList", "loveLangList"];
     var dataArrays = [ACTIVITIES, TRAITS, TRAITS, HOBBIES, HUMOR, GENRE, LOVELANG];
