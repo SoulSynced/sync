@@ -16,25 +16,48 @@
             <section>
                 <h3>Step 1: Your Profile</h3>
                 <input type="text" id="name" placeholder="Name / Nickname" required>
-                <input type="number" id="age" placeholder="Age" required>
+                <input type="number" id="age" placeholder="Your Age" required>
                 
-                <select id="gender" required>
-                    <option value="" disabled selected>Your Gender Identity</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Nonbinary">Nonbinary</option>
-                    <option value="Genderqueer">Genderqueer / Fluid</option>
-                    <option value="Other">Other</option>
-                </select>
+                <select id="gender" required></select>
 
                 <div class="selection-group">
-                    <p>Select 2 Activities you enjoy in your free time!:</p>
-                    <div id="activityList"></div>
+                    <p>Job / Career Status:</p>
+                    <select id="job" required></select>
                 </div>
 
                 <div class="selection-group">
-                    <p>Select 3 Core Traits that you Possess:</p>
-                    <div id="userTraitList"></div>
+                    <p>How should matches reach out?</p>
+                    <input type="text" id="contact" placeholder="e.g. Insta: @user or Discord: name" required>
+                </div>
+
+                <div class="selection-group">
+                    <p>Select 2 Activities:</p>
+                    <div id="activityList" class="grid-list"></div>
+                </div>
+
+                <div class="selection-group">
+                    <p>Select 3 Personality Traits:</p>
+                    <div id="userTraitList" class="grid-list"></div>
+                </div>
+
+                <div class="selection-group">
+                    <p>Favorite Hobbies (Pick 2):</p>
+                    <div id="hobbyList" class="grid-list"></div>
+                </div>
+
+                <div class="selection-group">
+                    <p>Your Sense of Humor:</p>
+                    <div id="humorList" class="grid-list"></div>
+                </div>
+
+                <div class="selection-group">
+                    <p>Favorite Movie/Show Genre:</p>
+                    <div id="genreList" class="grid-list"></div>
+                </div>
+
+                <div class="selection-group">
+                    <p>Primary Love Language:</p>
+                    <div id="loveLangList" class="grid-list"></div>
                 </div>
             </section>
 
@@ -42,51 +65,28 @@
 
             <section>
                 <h3>Step 2: Sync Preferences</h3>
-                <select id="prefGender" required>
-                    <option value="" disabled selected>Seeking...</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Nonbinary">Nonbinary</option>
-                    <option value="Genderqueer">Genderqueer / Fluid</option>
-                    <option value="Any">Open to All</option>
-                </select>
-
-                <div class="age-range">
-                    <input type="number" id="minAge" placeholder="Min Age" required>
-                    <input type="number" id="maxAge" placeholder="Max Age" required>
+                
+                <div class="selection-group">
+                    <p>Preferred Age Range:</p>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="number" id="minAge" placeholder="Min Age" min="13">
+                        <input type="number" id="maxAge" placeholder="Max Age" min="13">
+                    </div>
                 </div>
+
+                <select id="prefGender" required></select>
 
                 <div class="selection-group">
-                    <p>What are traits you would like to see in your partner? (Select 3):</p>
-                    <div id="prefTraitList"></div>
+                    <p>Must-have Partner Traits (Select 3):</p>
+                    <div id="prefTraitList" class="grid-list"></div>
                 </div>
             </section>
-
-              <div class="Hobbies"> required>
-                    <p>What are hobbies you want to enjoy with your partner?</p>
-                    <div id="prefHobbies"></div>
-                </div>
-            </section>
-
-              <div class="selection-group">
-                    <p>What is your style of humor?</p>
-                    <div id="prefHumor"></div>
-                </div>
-            </section>
-
-              <div class="selection-group">
-                    <p>What are traits you would like to see in your partner? (Select 3):</p>
-                    <div id="prefTraitList"></div>
-                </div>
-            </section>
-
-
 
             <button type="button" id="syncBtn" onclick="runMatchmaking()">Begin Sync</button>
         </form>
 
         <div id="results" class="hidden">
-            <h2>Optimal Matches Found</h2>
+            <h2>Optimal Loners Found</h2>
             <div id="matchDisplay"></div>
             <button type="button" onclick="resetForm()">New Sync</button>
         </div>
@@ -95,6 +95,14 @@
             <a href="#" onclick="clearData()" style="color: #ccc; font-size: 0.7rem; text-decoration: none;">Reset System Database</a>
         </p>
     </div>
+
+    <div id="profileModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
