@@ -187,7 +187,7 @@ function showModal(person, user) {
         "<div style='background:#f0edff; padding:20px; border-radius:15px; border:2px dashed var(--primary);'>" +
         "<p style='font-size:0.7rem; color:var(--primary); text-transform:uppercase;'>Contact Info</p>" +
         "<p style='font-weight:600; font-size:1.2rem;'>" + person.contact + "</p></div>" +
-        "<div style='text-align:left; margin-top:20px;'><p style='font-size:0.8rem; color:#666;'>Common Vibes:</p>" +
+        "<div style='text-align:left; margin-top:20px;'><p style='font-size:0.8rem; color:#666;'>Similarities:</p>" +
         "<div style='display:flex; flex-wrap:wrap; gap:8px;'>" + (commonHtml || "Matching Soul") + "</div></div>";
     
     modal.classList.remove("hidden");
