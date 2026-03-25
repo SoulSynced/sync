@@ -9,21 +9,21 @@ var EMOJIS = ["💖", "✨", "💜", "💫", "🌸", "☁️", "🩵"];
 
 var starterPack = [
     { 
-        name: "Luna", age: 16, gender: "Female", job: "Not Real Job L", contact: "Insta: @luna_stays_home",
+        name: "Luna", age: 16, gender: "Female", job: "Not Real Job", contact: "Insta: @luna_stays_home",
         activities: ["Going on Hikes", "Going out to Eat"], 
-        traits: ["Adventurous", "Academic", "Funny"],
-        hobbies: ["Art", "Music"], humor: "Satire", genre: "Anime", loveLang: "Quality Time"
+        traits: ["Adventurous", "Creative", "Funny"],
+        hobbies: ["Art", "Music"], humor: "Dry/Satire", genre: "Anime", loveLang: "Quality Time"
     },
     { 
         name: "Kai", age: 19, gender: "Male", job: "Engineer", contact: "Discord: kai_codez",
         activities: ["Watching TV/Playing Games", "Going out to Eat"], 
-        traits: ["Calm", "Honest", "Creative"],
+        traits: ["Self-Disciplined", "Trustworthy", "Curious"],
         hobbies: ["Gym", "Cooking/Baking"], humor: "Dark Humor", genre: "Horror/Psychological Thriller", loveLang: "Physical Touch"
     },
     { 
-        name: "Bob", age: 16, gender: "Other", job: "Mcdonald's Worker", contact: "Snap: bobthebuilder",
+        name: "Bob", age: 16, gender: "Other", job: "Dissapointment", contact: "Snap: bobthebuilder",
         activities: ["Window Shopping at the Mall", "Picnic at the Park"], 
-        traits: ["Outgoing", "Kind", "Loyal"],
+        traits: ["Optimistic", "Warm-Hearted", "Empathetic"],
         hobbies: ["Music", "People Watching"], humor: "Silly Jokes", genre: "Romance", loveLang: "Quality Time"
     }
 ];
@@ -46,8 +46,7 @@ function setupForm() {
 
     for (var i = 0; i < lists.length; i++) {
         var el = document.getElementById(lists[i]);
-        var type = "checkbox";
-        if (i >= 4) { type = "radio"; }
+        var type = (i >= 4) ? "radio" : "checkbox";
         
         var html = "";
         for (var j = 0; j < dataArrays[i].length; j++) {
@@ -92,7 +91,7 @@ function runMatchmaking() {
     var userLove = getSelected("loveLang")[0];
     var prefTraits = getSelected("ptrait");
 
-    if (!userName || !userAge || !minAge || !maxAge || !userContact || userAct.length == 0) {
+    if (!userName || !userAge || !minAge || !maxAge || !userContact || userAct.length === 0) {
         alert("Please fill in your profile and age preferences! ✨"); 
         return;
     }
@@ -113,17 +112,17 @@ function runMatchmaking() {
                 continue; 
             }
 
-            if (prefGender == "Any" || prefGender == person.gender) { score += 30; }
+            if (prefGender === "Any" || prefGender === person.gender) { score += 30; }
             
             for (var a = 0; a < userAct.length; a++) {
-                if (person.activities.indexOf(userAct[a]) != -1) { score += 10; }
+                if (person.activities.indexOf(userAct[a]) !== -1) { score += 10; }
             }
             for (var t = 0; t < prefTraits.length; t++) {
-                if (person.traits.indexOf(prefTraits[t]) != -1) { score += 15; }
+                if (person.traits.indexOf(prefTraits[t]) !== -1) { score += 15; }
             }
             
-            if (userHumor == person.humor) { score += 10; }
-            if (userGenre == person.genre) { score += 10; }
+            if (userHumor === person.humor) { score += 10; }
+            if (userGenre === person.genre) { score += 10; }
 
             person.matchScore = Math.min(99, score);
             results.push(person);
@@ -153,7 +152,7 @@ function displayResults(results, currentUser) {
     var count = 0;
     for (var i = 0; i < results.length; i++) {
         var m = results[i];
-        if (m.name != currentUser.name && count < 3) {
+        if (m.name !== currentUser.name && count < 3) {
             var card = document.createElement("div");
             card.className = "match-card";
             card.innerHTML = "<span>" + m.name + "</span><strong>" + m.matchScore + "% Match</strong>";
@@ -172,10 +171,10 @@ function showModal(person, user) {
     var common = [];
     
     for (var i = 0; i < person.activities.length; i++) {
-        if (user.activities.indexOf(person.activities[i]) != -1) { common.push(person.activities[i]); }
+        if (user.activities.indexOf(person.activities[i]) !== -1) { common.push(person.activities[i]); }
     }
     for (var j = 0; j < person.traits.length; j++) {
-        if (user.traits.indexOf(person.traits[j]) != -1) { common.push(person.traits[j]); }
+        if (user.traits.indexOf(person.traits[j]) !== -1) { common.push(person.traits[j]); }
     }
 
     var commonHtml = "";
