@@ -1,8 +1,8 @@
 var ACTIVITIES = ["Watching TV/Playing Games", "Window Shopping at the Mall", "Picnic at the Park", "Going on Hikes", "Going out to Eat"];
-var TRAITS = ["Funny", "Kind", "Creative", "Calm", "Outgoing", "Adventurous", "Ambitious", "Honest", "Loyal", "Academic"];
-var HOBBIES = ["Art", "Music", "Gym", "Sleeping", "Cooking/Baking", "DoomScrolling", "People Watching"];
-var HUMOR = ["Silly Jokes", "Dark Humor", "Dad Jokes", "Chronically Online", "Satire"];
-var JOBS = ["Engineer", "Doctor", "Lawyer", "Mcdonald's Worker", "Not Real Job L"];
+var TRAITS = ["Funny", "Warm-Hearted", "Creative", "Optimistic", "Curious", "Adventurous", "Ambitious", "Trustworthy", "Empathetic", "Self-Disciplined"];
+var HOBBIES = ["Art", "Music", "Gym", "Sleeping", "Cooking/Baking", "Doom Scrolling", "People Watching"];
+var HUMOR = ["Silly Jokes", "Dark Humor", "Dad Jokes", "Chronically Online", "Dry/Satire"];
+var JOBS = ["Engineer", "Doctor", "Lawyer", "Dissapointment", "Not Real Job"];
 var GENRE = ["Horror/Psychological Thriller", "Comedy", "Action", "Romance", "Drama", "Anime"];
 var LOVELANG = ["Words of Affirmation", "Physical Touch", "Giving/Receiving Gifts", "Quality Time", "Acts of Service"];
 var EMOJIS = ["💖", "✨", "💜", "💫", "🌸", "☁️", "🩵"];
