@@ -9,13 +9,13 @@ var EMOJIS = ["💖", "✨", "💜", "💫", "🌸", "☁️", "🩵"];
 
 var starterPack = [
     { 
-        name: "Sally", age: 16, gender: "Female", job: "Not Real Job", contact: "not real person",
+        name: "Luna", age: 16, gender: "Female", job: "Not Real Job", contact: "not real person",
         activities: ["Going on Hikes", "Going out to Eat"], 
         traits: ["Adventurous", "Creative", "Funny"],
         hobbies: ["Art", "Music"], humor: "Dry/Satire", genre: "Anime", loveLang: "Quality Time"
     },
     { 
-        name: "Fred", age: 19, gender: "Male", job: "Engineer", contact: "not real person",
+        name: "Kai", age: 19, gender: "Male", job: "Engineer", contact: "not real person",
         activities: ["Watching TV/Playing Games", "Going out to Eat"], 
         traits: ["Self-Disciplined", "Trustworthy", "Curious"],
         hobbies: ["Gym", "Cooking/Baking"], humor: "Dark Humor", genre: "Horror/Psychological Thriller", loveLang: "Physical Touch"
@@ -104,11 +104,11 @@ function runMatchmaking() {
         for (var i = 0; i < database.length; i++) {
             var person = database[i];
             var score = 0;
+
             if (person.age >= minAge && person.age <= maxAge) {
                 score += 20; 
-            } else {
-                continue; 
             }
+
             if (prefGender === "Any" || prefGender === person.gender) { score += 30; }
             for (var a = 0; a < userAct.length; a++) {
                 if (person.activities.indexOf(userAct[a]) !== -1) { score += 10; }
