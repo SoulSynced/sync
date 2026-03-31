@@ -22,9 +22,9 @@ const JOBS = ["Engineer", "Doctor", "Lawyer", "Disappointment", "Unemployed"];
 const EMOJIS = ["💖", "✨", "🌸", "🤍", "🎀", "💕"];
 
 const fakeUsers = [
-    { name: "Luna", age: 22, job: "Disappointment", contact: "@luna_skye", humor: "Dark", movie: "Horror", myTraits: ["Creative", "Curious"], targetTraits: ["Funny"] },
-    { name: "Oliver", age: 25, job: "Engineer", contact: "oliver.dev", humor: "Satire", movie: "Sci-Fi", myTraits: ["Ambitious"], targetTraits: ["Creative"] },
-    { name: "Jade", age: 21, job: "Disappointment", contact: "@jade_vibe", humor: "Chronically Online", movie: "Comedy", myTraits: ["Warm"], targetTraits: ["Curious"] }
+    { name: "Timmy", age: 22, job: "Disappointment", contact: "@luna_skye", humor: "Dark", movie: "Horror", myTraits: ["Creative", "Curious"], targetTraits: ["Funny"] },
+    { name: "Joe", age: 25, job: "Engineer", contact: "oliver.dev", humor: "Satire", movie: "Sci-Fi", myTraits: ["Ambitious"], targetTraits: ["Creative"] },
+    { name: "Penelope", age: 21, job: "Disappointment", contact: "@jade_vibe", humor: "Chronically Online", movie: "Comedy", myTraits: ["Warm"], targetTraits: ["Curious"] }
 ];
 
 let liveDatabase = [...fakeUsers]; 
