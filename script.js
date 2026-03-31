@@ -1,206 +1,162 @@
-var ACTIVITIES = ["Watching TV/Playing Games", "Window Shopping at the Mall", "Picnic at the Park", "Going on Hikes", "Going out to Eat"];
-var TRAITS = ["Funny", "Warm-Hearted", "Creative", "Optimistic", "Curious", "Adventurous", "Ambitious", "Trustworthy", "Empathetic", "Self-Disciplined"];
-var HOBBIES = ["Art", "Music", "Gym", "Sleeping", "Cooking/Baking", "Doom Scrolling", "People Watching"];
-var HUMOR = ["Silly Jokes", "Dark Humor", "Dad Jokes", "Chronically Online", "Dry/Satire"];
-var JOBS = ["Engineer", "Doctor", "Lawyer", "Disappointment", "Not Real Job"];
-var GENRE = ["Horror/Psychological Thriller", "Comedy", "Action", "Romance", "Drama", "Anime"];
-var LOVELANG = ["Words of Affirmation", "Physical Touch", "Giving/Receiving Gifts", "Quality Time", "Acts of Service"];
-var EMOJIS = ["💖", "✨", "💜", "💫", "🌸", "☁️", "🩵"];
+const firebaseConfig = {
+  apiKey: "AIzaSyBTwPB6IHc8IwzxMpAipRALZZJ395PQdAA",
+  authDomain: "soul-sync-123.firebaseapp.com",
+  databaseURL: "https://soul-sync-123-default-rtdb.firebaseio.com", 
+  projectId: "soul-sync-123",
+  storageBucket: "soul-sync-123.firebasestorage.app",
+  messagingSenderId: "579254577012",
+  appId: "1:579254577012:web:bd24c62b4a2d962eebee21"
+};
 
-var starterPack = [
-    { 
-        name: "Luna", age: 16, gender: "Female", job: "Not Real Job", contact: "not real person",
-        activities: ["Going on Hikes", "Going out to Eat"], 
-        traits: ["Adventurous", "Creative", "Funny"],
-        hobbies: ["Art", "Music"], humor: "Dry/Satire", genre: "Anime", loveLang: "Quality Time"
-    },
-    { 
-        name: "Kai", age: 19, gender: "Male", job: "Engineer", contact: "not real person",
-        activities: ["Watching TV/Playing Games", "Going out to Eat"], 
-        traits: ["Self-Disciplined", "Trustworthy", "Curious"],
-        hobbies: ["Gym", "Cooking/Baking"], humor: "Dark Humor", genre: "Horror/Psychological Thriller", loveLang: "Physical Touch"
-    },
-    { 
-        name: "Bob", age: 16, gender: "Other", job: "Dissapointment", contact: "not real person",
-        activities: ["Window Shopping at the Mall", "Picnic at the Park"], 
-        traits: ["Optimistic", "Warm-Hearted", "Empathetic"],
-        hobbies: ["Music", "People Watching"], humor: "Silly Jokes", genre: "Romance", loveLang: "Quality Time"
-    }
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+const ACTIVITIES = ["Watching TV", "Shopping", "People Watching", "Hiking", "Eating Out"];
+const MOVIES = ["Horror", "Comedy", "Action", "Romance", "Sci-Fi"];
+const LOVE = ["Quality Time", "Gifts", "Touch", "Service", "Words"];
+const TRAITS = ["Funny", "Warm", "Creative", "Optimistic", "Curious", "Ambitious"];
+const HUMOR = ["Silly", "Dark", "Dad Jokes", "Chronically Online", "Satire"];
+const JOBS = ["Engineer", "Doctor", "Lawyer", "Disappointment", "Unemployed"];
+const EMOJIS = ["💖", "✨", "🌸", "☁️", "🎀"];
+
+const fakeUsers = [
+    { name: "Luna", age: 22, job: "Disappointment", contact: "@luna_skye", humor: "Dark", movie: "Horror", myTraits: ["Creative", "Curious"], targetTraits: ["Funny"] },
+    { name: "Oliver", age: 25, job: "Engineer", contact: "oliver.dev", humor: "Satire", movie: "Sci-Fi", myTraits: ["Ambitious"], targetTraits: ["Creative"] },
+    { name: "Jade", age: 21, job: "Disappointment", contact: "@jade_vibe", humor: "Chronically Online", movie: "Comedy", myTraits: ["Warm"], targetTraits: ["Curious"] }
 ];
 
-var database = JSON.parse(localStorage.getItem("soulSyncedDB"));
-if (database === null) {
-    database = starterPack;
+let liveDatabase = [...fakeUsers]; 
+
+db.ref("users").on("value", (snapshot) => {
+    const data = snapshot.val();
+    liveDatabase = [...fakeUsers]; 
+    if (data) {
+        for (let id in data) {
+            liveDatabase.push(data[id]);
+        }
+    }
+});
+
+function nextStep(stepId) {
+    document.getElementById('landing-screen').classList.add('hidden');
+    document.getElementById('form-screen').classList.add('hidden');
+    document.querySelectorAll('.form-step').forEach(s => s.classList.add('hidden'));
+    document.getElementById('form-screen').classList.remove('hidden');
+    const target = document.getElementById(stepId);
+    if(target) target.classList.remove('hidden');
 }
 
 function setupForm() {
-    var genderSelect = document.getElementById("gender");
-    genderSelect.innerHTML = "<option value='' disabled selected>Your Identity</option><option value='Male'>Male</option><option value='Female'>Female</option><option value='Other'>Other</option>";
-
-    var prefGenderSelect = document.getElementById("prefGender");
-    prefGenderSelect.innerHTML = "<option value='' disabled selected>Gender Preference...</option><option value='Male'>Male</option><option value='Female'>Female</option><option value='Other'>Other</option><option value='Any'>Open to All</option>";
-
-    var lists = ["activityList", "userTraitList", "prefTraitList", "hobbyList", "humorList", "genreList", "loveLangList"];
-    var dataArrays = [ACTIVITIES, TRAITS, TRAITS, HOBBIES, HUMOR, GENRE, LOVELANG];
-    var names = ["act", "trait", "ptrait", "hobby", "humor", "genre", "loveLang"];
-
-    for (var i = 0; i < lists.length; i++) {
-        var el = document.getElementById(lists[i]);
-        var type = (i >= 4) ? "radio" : "checkbox";
-        var html = "";
-        for (var j = 0; j < dataArrays[i].length; j++) {
-            var val = dataArrays[i][j];
-            html += "<label class='checkbox-label'><input type='" + type + "' name='" + names[i] + "' value='" + val + "'><span>" + val + "</span></label>";
-        }
+    document.getElementById("gender").innerHTML = `<option value="" disabled selected>Your Gender</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option>`;
+    document.getElementById("prefGender").innerHTML = `<option value="" disabled selected>Partner Preference</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option><option value="Any">Any</option>`;
+    
+    let jobHtml = "<option value='' disabled selected>Select Career</option>";
+    JOBS.forEach(j => jobHtml += `<option value="${j}">${j}</option>`);
+    document.getElementById("job").innerHTML = jobHtml;
+    
+    const sections = [
+        { id: "activityList", data: ACTIVITIES, name: "act", type: "checkbox", limit: 2 },
+        { id: "movieList", data: MOVIES, name: "movie", type: "radio" },
+        { id: "loveList", data: LOVE, name: "love", type: "radio" },
+        { id: "userTraitList", data: TRAITS, name: "myTrait", type: "checkbox", limit: 2 },
+        { id: "targetTraitList", data: TRAITS, name: "targetTrait", type: "checkbox", limit: 2 },
+        { id: "humorList", data: HUMOR, name: "humor", type: "radio" }
+    ];
+    
+    sections.forEach(section => {
+        const el = document.getElementById(section.id);
+        let html = "";
+        section.data.forEach(item => {
+            html += `<label class="checkbox-label"><input type="${section.type}" name="${section.name}" value="${item}"><span>${item}</span></label>`;
+        });
         el.innerHTML = html;
-    }
-
-    var jobSelect = document.getElementById("job");
-    var jobHtml = "<option value='' disabled selected>Career</option>";
-    for (var k = 0; k < JOBS.length; k++) {
-        jobHtml += "<option value='" + JOBS[k] + "'>" + JOBS[k] + "</option>";
-    }
-    jobSelect.innerHTML = jobHtml;
+        if (section.limit) {
+            el.addEventListener('change', (e) => {
+                if (el.querySelectorAll('input:checked').length > section.limit) e.target.checked = false;
+            });
+        }
+    });
 }
 
 function runMatchmaking() {
-    var userName = document.getElementById("name").value;
-    var userAge = parseInt(document.getElementById("age").value);
-    var userGender = document.getElementById("gender").value;
-    var userJob = document.getElementById("job").value;
-    var userContact = document.getElementById("contact").value;
-    var prefGender = document.getElementById("prefGender").value;
-    var minAge = parseInt(document.getElementById("minAge").value);
-    var maxAge = parseInt(document.getElementById("maxAge").value);
-
-    function getSelected(name) {
-        var selected = [];
-        var inputs = document.getElementsByName(name);
-        for (var i = 0; i < inputs.length; i++) {
-            if (inputs[i].checked) { selected.push(inputs[i].value); }
-        }
-        return selected;
-    }
-
-    var userAct = getSelected("act");
-    var userTrait = getSelected("trait");
-    var userHobby = getSelected("hobby");
-    var userHumor = getSelected("humor")[0];
-    var userGenre = getSelected("genre")[0];
-    var userLove = getSelected("loveLang")[0];
-    var prefTraits = getSelected("ptrait");
-
-    if (!userName || !userAge || !minAge || !maxAge || !userContact || userAct.length === 0) {
-        alert("Please fill in your profile and age preferences! ✨"); 
-        return;
-    }
-
-    var btn = document.getElementById("syncBtn");
-    btn.innerText = "Finding match...";
+    const name = document.getElementById("name").value;
+    const age = document.getElementById("age").value;
+    if (!name || !age) { alert("Please enter your name and age!"); return; }
+    
+    const btn = document.getElementById("syncBtn");
+    btn.innerText = "Syncing...";
     btn.disabled = true;
 
-    setTimeout(function() {
-        var results = [];
-        for (var i = 0; i < database.length; i++) {
-            var person = database[i];
-            var score = 0;
+    const newUser = {
+        name: name,
+        age: parseInt(age),
+        contact: document.getElementById("contact").value || "Not provided",
+        job: document.getElementById("job").value,
+        movie: (document.querySelector('input[name="movie"]:checked') || {}).value || "",
+        humor: (document.querySelector('input[name="humor"]:checked') || {}).value || "",
+        myTraits: Array.from(document.querySelectorAll('input[name="myTrait"]:checked')).map(el => el.value),
+        targetTraits: Array.from(document.querySelectorAll('input[name="targetTrait"]:checked')).map(el => el.value)
+    };
 
-            if (person.age >= minAge && person.age <= maxAge) {
-                score += 20; 
-            }
-
-            if (prefGender === "Any" || prefGender === person.gender) { score += 30; }
-            for (var a = 0; a < userAct.length; a++) {
-                if (person.activities.indexOf(userAct[a]) !== -1) { score += 10; }
-            }
-            for (var t = 0; t < prefTraits.length; t++) {
-                if (person.traits.indexOf(prefTraits[t]) !== -1) { score += 15; }
-            }
-            if (userHumor === person.humor) { score += 10; }
-            if (userGenre === person.genre) { score += 10; }
-            person.matchScore = Math.min(99, score);
-            results.push(person);
-        }
-        results.sort(function(a, b) { return b.matchScore - a.matchScore; });
-        var newUser = {
-            name: userName + " 💫", age: userAge, gender: userGender, job: userJob, contact: userContact,
-            activities: userAct, traits: userTrait, hobbies: userHobby, humor: userHumor, genre: userGenre, loveLang: userLove
-        };
-        database.push(newUser);
-        localStorage.setItem("soulSyncedDB", JSON.stringify(database));
+    db.ref("users").push(newUser).then(() => {
+        setTimeout(() => {
+            const results = liveDatabase.filter(p => p.name !== newUser.name).map(p => {
+                let score = 40;
+                let common = [];
+                if (p.myTraits && newUser.targetTraits) {
+                    p.myTraits.forEach(t => { if (newUser.targetTraits.includes(t)) { score += 20; common.push(t); }});
+                }
+                if (p.humor === newUser.humor) { score += 10; common.push(p.humor + " Humor"); }
+                if (p.movie === newUser.movie) { score += 10; common.push(p.movie + " Movies"); }
+                return {...p, matchScore: score > 99 ? 99 : score, common: common};
+            });
+            displayResults(results);
+        }, 1500);
+    }).catch(err => {
         btn.innerText = "Begin Sync";
         btn.disabled = false;
-        displayResults(results, newUser);
-    }, 1500);
+        alert("Sync failed. Check your Firebase Database Rules!");
+    });
 }
 
-function displayResults(results, currentUser) {
-    document.getElementById("matchForm").classList.add("hidden");
+function displayResults(results) {
+    document.getElementById("form-screen").classList.add("hidden");
     document.getElementById("results").classList.remove("hidden");
-    var display = document.getElementById("matchDisplay");
+    const display = document.getElementById("matchDisplay");
     display.innerHTML = "";
-    var count = 0;
-    for (var i = 0; i < results.length; i++) {
-        var m = results[i];
-        if (m.name !== currentUser.name && count < 3) {
-            var card = document.createElement("div");
-            card.className = "match-card";
-            card.innerHTML = "<span>" + m.name + "</span><strong>" + m.matchScore + "% Match</strong>";
-            card.onclick = (function(person) {
-                return function() { showModal(person, currentUser); };
-            })(m);
-            display.appendChild(card);
-            count++;
-        }
-    }
-}
-
-function showModal(person, user) {
-    var modal = document.getElementById("profileModal");
-    var body = document.getElementById("modalBody");
-    var common = [];
-    if (person.activities && user.activities) {
-        for (var i = 0; i < person.activities.length; i++) {
-            if (user.activities.indexOf(person.activities[i]) !== -1) { common.push(person.activities[i]); }
-        }
-    }
-    if (person.traits && user.traits) {
-        for (var j = 0; j < person.traits.length; j++) {
-            if (user.traits.indexOf(person.traits[j]) !== -1) { common.push(person.traits[j]); }
-        }
-    }
-    var commonHtml = "";
-    for (var k = 0; k < common.length; k++) {
-        commonHtml += "<span class='common-tag' style='margin:0;'>" + common[k] + "</span>";
-    }
-
-    body.innerHTML = "<h2 style='font-family:Pacifico, cursive; color:var(--primary); margin-bottom:10px;'>" + (person.name || "Unknown") + "</h2>" +
-        "<p style='margin-bottom:15px;'><strong>" + (person.age || "??") + "</strong> — " + (person.job || "N/A") + "</p>" +
-        "<div style='margin-bottom:20px;'>" +
-            "<p style='font-size:0.7rem; color:var(--primary); text-transform:uppercase; margin-bottom:2px;'>Contact Info</p>" +
-            "<p style='font-weight:600; font-size:1.1rem;'>" + (person.contact || "N/A") + "</p>" +
-        "</div>" +
-        "<div style='text-align:left;'>" + 
-            "<p style='font-size:0.8rem; color:#666; margin-bottom:5px;'>Similarities:</p>" +
-            "<div style='display:flex; flex-wrap:wrap; gap:8px;'>" + (commonHtml || "<span style='color:#999;'>N/A</span>") + "</div>" +
-        "</div>";
     
-    modal.classList.remove("hidden");
+    results.sort((a,b) => b.matchScore - a.matchScore).slice(0, 3).forEach(m => {
+        const card = document.createElement("div");
+        card.className = "match-card";
+        card.innerHTML = `<span>${m.name}</span><strong>${m.matchScore}%</strong>`;
+        card.onclick = () => {
+            const commonHtml = m.common.length > 0 ? `<p><strong>Shared Interests:</strong> ${m.common.join(", ")}</p>` : "";
+            document.getElementById("modalBody").innerHTML = `
+                <h2 class="logo-small">${m.name}, ${m.age}</h2>
+                <p><strong>Career:</strong> ${m.job || 'Secret'}</p>
+                <p><strong>Contact:</strong> ${m.contact}</p>
+                ${commonHtml}
+                <hr>
+                <button onclick="alert('Starting chat with ${m.name}...')">Start Messaging</button>
+            `;
+            document.getElementById("profileModal").classList.remove("hidden");
+        };
+        display.appendChild(card);
+    });
 }
 
 function closeModal() { document.getElementById("profileModal").classList.add("hidden"); }
 function resetForm() { location.reload(); }
-function clearData() { localStorage.removeItem("soulSyncedDB"); location.reload(); }
 
 function createFloatingBackground() {
-    var container = document.getElementById("emoji-container");
-    if (!container) return;
-    for (var i = 0; i < 20; i++) {
-        var span = document.createElement("span");
+    const container = document.getElementById("emoji-container");
+    if(!container) return;
+    for (let i = 0; i < 15; i++) {
+        const span = document.createElement("span");
         span.className = "floating-emoji";
         span.innerText = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
         span.style.left = (Math.random() * 100) + "vw";
-        span.style.animationDelay = (Math.random() * 15) + "s";
+        span.style.animationDelay = (Math.random() * 10) + "s";
         container.appendChild(span);
     }
 }
