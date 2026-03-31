@@ -8,7 +8,9 @@ const firebaseConfig = {
   appId: "1:579254577012:web:bd24c62b4a2d962eebee21"
 };
 
-firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
 const db = firebase.database();
 
 const ACTIVITIES = ["Watching TV", "Shopping", "People Watching", "Hiking", "Eating Out"];
@@ -17,7 +19,7 @@ const LOVE = ["Quality Time", "Gifts", "Touch", "Service", "Words"];
 const TRAITS = ["Funny", "Warm", "Creative", "Optimistic", "Curious", "Ambitious"];
 const HUMOR = ["Silly", "Dark", "Dad Jokes", "Chronically Online", "Satire"];
 const JOBS = ["Engineer", "Doctor", "Lawyer", "Disappointment", "Unemployed"];
-const EMOJIS = ["💖", "✨", "🌸", "☁️", "🎀"];
+const EMOJIS = ["💖", "✨", "🌸", "🤍", "🎀", "💕"];
 
 const fakeUsers = [
     { name: "Luna", age: 22, job: "Disappointment", contact: "@luna_skye", humor: "Dark", movie: "Horror", myTraits: ["Creative", "Curious"], targetTraits: ["Funny"] },
@@ -39,16 +41,28 @@ db.ref("users").on("value", (snapshot) => {
 
 function nextStep(stepId) {
     document.getElementById('landing-screen').classList.add('hidden');
-    document.getElementById('form-screen').classList.add('hidden');
-    document.querySelectorAll('.form-step').forEach(s => s.classList.add('hidden'));
     document.getElementById('form-screen').classList.remove('hidden');
-    const target = document.getElementById(stepId);
-    if(target) target.classList.remove('hidden');
+
+    document.querySelectorAll('.form-step').forEach(step => {
+        step.classList.add('hidden');
+    });
+
+    if (stepId === 'form-screen' || !stepId) {
+        document.getElementById('step-1').classList.remove('hidden');
+    } else {
+        const target = document.getElementById(stepId);
+        if (target) target.classList.remove('hidden');
+    }
+    
+    window.scrollTo(0, 0);
 }
 
 function setupForm() {
-    document.getElementById("gender").innerHTML = `<option value="" disabled selected>Your Gender</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option>`;
-    document.getElementById("prefGender").innerHTML = `<option value="" disabled selected>Partner Preference</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option><option value="Any">Any</option>`;
+    const genderOptions = `<option value="" disabled selected>Your Gender</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option>`;
+    document.getElementById("gender").innerHTML = genderOptions;
+    
+    const prefOptions = `<option value="" disabled selected>Partner Preference</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option><option value="Any">Any</option>`;
+    document.getElementById("prefGender").innerHTML = prefOptions;
     
     let jobHtml = "<option value='' disabled selected>Select Career</option>";
     JOBS.forEach(j => jobHtml += `<option value="${j}">${j}</option>`);
@@ -65,14 +79,18 @@ function setupForm() {
     
     sections.forEach(section => {
         const el = document.getElementById(section.id);
+        if(!el) return;
         let html = "";
         section.data.forEach(item => {
             html += `<label class="checkbox-label"><input type="${section.type}" name="${section.name}" value="${item}"><span>${item}</span></label>`;
         });
         el.innerHTML = html;
+        
         if (section.limit) {
             el.addEventListener('change', (e) => {
-                if (el.querySelectorAll('input:checked').length > section.limit) e.target.checked = false;
+                if (el.querySelectorAll('input:checked').length > section.limit) {
+                    e.target.checked = false;
+                }
             });
         }
     });
@@ -81,7 +99,12 @@ function setupForm() {
 function runMatchmaking() {
     const name = document.getElementById("name").value;
     const age = document.getElementById("age").value;
-    if (!name || !age) { alert("Please enter your name and age!"); return; }
+    const contact = document.getElementById("contact").value;
+    
+    if (!name || !age || !contact) { 
+        alert("Please complete your information! 🌸"); 
+        return; 
+    }
     
     const btn = document.getElementById("syncBtn");
     btn.innerText = "Syncing...";
@@ -90,7 +113,7 @@ function runMatchmaking() {
     const newUser = {
         name: name,
         age: parseInt(age),
-        contact: document.getElementById("contact").value || "Not provided",
+        contact: contact,
         job: document.getElementById("job").value,
         movie: (document.querySelector('input[name="movie"]:checked') || {}).value || "",
         humor: (document.querySelector('input[name="humor"]:checked') || {}).value || "",
@@ -104,7 +127,12 @@ function runMatchmaking() {
                 let score = 40;
                 let common = [];
                 if (p.myTraits && newUser.targetTraits) {
-                    p.myTraits.forEach(t => { if (newUser.targetTraits.includes(t)) { score += 20; common.push(t); }});
+                    p.myTraits.forEach(t => { 
+                        if (newUser.targetTraits.includes(t)) { 
+                            score += 20; 
+                            common.push(t); 
+                        }
+                    });
                 }
                 if (p.humor === newUser.humor) { score += 10; common.push(p.humor + " Humor"); }
                 if (p.movie === newUser.movie) { score += 10; common.push(p.movie + " Movies"); }
@@ -115,7 +143,7 @@ function runMatchmaking() {
     }).catch(err => {
         btn.innerText = "Begin Sync";
         btn.disabled = false;
-        alert("Sync failed. Check your Firebase Database Rules!");
+        alert("Sync failed. Check your Firebase Rules! ⚠️");
     });
 }
 
@@ -137,7 +165,7 @@ function displayResults(results) {
                 <p><strong>Contact:</strong> ${m.contact}</p>
                 ${commonHtml}
                 <hr>
-                <button onclick="alert('Starting chat with ${m.name}...')">Start Messaging</button>
+                <p style="font-style: italic; color: #a37c85;">Reach out by their contact and stop being a loner! </p>
             `;
             document.getElementById("profileModal").classList.remove("hidden");
         };
