@@ -13,10 +13,10 @@ if (!firebase.apps.length) {
 }
 const db = firebase.database();
 
-const ACTIVITIES = ["Watching TV", "Shopping", "People Watching", "Hiking", "Eating Out"];
+const ACTIVITIES = ["Watching TV", "Shopping", "People Watching", "Hiking", "Restaurant"];
 const MOVIES = ["Horror", "Comedy", "Action", "Romance", "Sci-Fi"];
 const LOVE = ["Quality Time", "Gifts", "Touch", "Service", "Words"];
-const TRAITS = ["Funny", "Warm", "Creative", "Optimistic", "Curious", "Ambitious"];
+const TRAITS = ["Funny", "Warm-hearted", "Creative", "Optimistic", "Curious", "Ambitious", "Academic"];
 const HUMOR = ["Silly", "Dark", "Dad Jokes", "Chronically Online", "Satire"];
 const JOBS = ["Engineer", "Doctor", "Lawyer", "Disappointment", "Unemployed"];
 const EMOJIS = ["💖", "✨", "🌸", "🤍", "🎀", "💕"];
